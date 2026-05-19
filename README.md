@@ -1,6 +1,5 @@
 # FF-UA-MF: Feature Fluctuation-Driven Uncertainty-Aware Method for Multimodal Fusion
 
-Official implementation of **"Feature Fluctuation-Driven Uncertainty-Aware Method for Multimodal Fusion in Special-Operations Monitoring"**.
 
 ## Overview
 
@@ -54,7 +53,7 @@ Input (Video + IMU)
 
 ```bash
 # Clone the repository
-git clone https://github.com/ZhiyongJi/FF-UA-MF.git
+git clone https://github.com/ZhiyongJi0909/FF-UA-MF.git
 cd FF-UA-MF
 
 # Install dependencies
@@ -106,7 +105,7 @@ python code/main.py \
     --dataRoot /path/to/UTD-MHAD \
     --pretrainedVsoarnet /path/to/best_vsoarnet_ucf101_3d.pth \
     --batchSize 64 \
-    --epochs 100 \
+    --epochs 50 \
     --lr 5e-5 \
     --imu-lr 2.5e-4 \
     --weight-decay 5e-4 \
