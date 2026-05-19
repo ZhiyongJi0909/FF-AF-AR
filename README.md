@@ -6,13 +6,6 @@ Official implementation of **"Feature Fluctuation-Driven Uncertainty-Aware Metho
 
 This repository contains the PyTorch implementation of FF-UA-MF, a lightweight uncertainty-aware multimodal fusion framework designed for industrial special-operations monitoring on edge devices. The model dynamically re-weights visual and inertial modalities based on real-time feature fluctuation analysis, without requiring explicit noise priors or Bayesian posterior sampling.
 
-## Key Features
-
-- **Lightweight dual-stream architecture** (3.35M parameters, 3.1 GFLOPs)
-- **Feature Fluctuation-Driven Uncertainty-Aware (FFUA)** fusion: uses temporal variance and decision dispersion as reliability proxies
-- **Joint multitask loss**: classification + InfoNCE alignment with same-class masking + Frobenius-norm decorrelation
-- **Edge-friendly**: 76 FPS inference throughput on standard hardware
-- **High accuracy**: 98.66% average accuracy on UTD-MHAD and SO-MHAD benchmarks
 
 ## Architecture
 
@@ -37,8 +30,8 @@ Input (Video + IMU)
 
 | Paper Name | Code File | Description |
 |:---|:---|:---|
-| **VSOARnet** | `TMAInet_model_v1.py` | Video-based Special Operations Action Recognition network. Lightweight RepViT with 3D stem, neighborhood-aware gated channel enhancement (CFF + ECA), and reparameterized training |
-| **ISOARnet** | `imu_model_v4.py` | Inertial-based Special Operations Action Recognition network. Multiscale 1D CNN + Bi-GRU + channel attention |
+| **VSOARnet** | `rgb_model.py` | Video-based Special Operations Action Recognition network. Lightweight RepViT with 3D stem, neighborhood-aware gated channel enhancement (CFF + ECA), and reparameterized training |
+| **ISOARnet** | `imu_model.py` | Inertial-based Special Operations Action Recognition network. Multiscale 1D CNN + Bi-GRU + channel attention |
 | **FFUA** | `fusion_model.py` | Feature Fluctuation-Driven Uncertainty-Aware fusion module |
 | **FF_UA_MF** | `fusion_model.py` | Complete multimodal fusion model |
 
@@ -61,7 +54,7 @@ Input (Video + IMU)
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/FF-UA-MF.git
+git clone https://github.com/ZhiyongJi/FF-UA-MF.git
 cd FF-UA-MF
 
 # Install dependencies
@@ -102,7 +95,7 @@ Follow the same directory structure as UTD-MHAD for the self-collected special-o
 python pretrain_vsoarnet.py \
     --dataset ucf101 \
     --epochs 100 \
-    --batch_size 32 \
+    --batch_size 64 \
     --lr 1e-3
 ```
 
@@ -112,7 +105,7 @@ python pretrain_vsoarnet.py \
 python code/main.py \
     --dataRoot /path/to/UTD-MHAD \
     --pretrainedVsoarnet /path/to/best_vsoarnet_ucf101_3d.pth \
-    --batchSize 8 \
+    --batchSize 64 \
     --epochs 100 \
     --lr 5e-5 \
     --imu-lr 2.5e-4 \
@@ -126,8 +119,8 @@ python code/main.py \
 |:---|:---|:---|
 | `--dataRoot` | (required) | Dataset root directory |
 | `--pretrainedVsoarnet` | `None` | Path to VSOARnet pre-trained weights |
-| `--batchSize` | `8` | Training batch size |
-| `--epochs` | `100` | Total training epochs |
+| `--batchSize` | `64` | Training batch size |
+| `--epochs` | `50` | Total training epochs |
 | `--lr` | `5e-5` | VSOARnet learning rate |
 | `--imu-lr` | `2.5e-4` | ISOARnet learning rate |
 | `--weight-decay` | `5e-4` | Weight decay |
@@ -138,11 +131,7 @@ python code/main.py \
 
 Pre-trained model weights will be released upon paper acceptance. The model supports loading partial state dicts for fine-tuning.
 
-## Quick Test
 
-```bash
-cd code
-python test_ffua.py
 ```
 
 This runs a forward-pass sanity check verifying:
