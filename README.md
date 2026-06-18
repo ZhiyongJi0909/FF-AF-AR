@@ -1,9 +1,9 @@
-# FF-UA-MF: Feature Fluctuation-Driven Uncertainty-Aware Method for Multimodal Fusion
+
 
 
 ## Overview
 
-This repository contains the PyTorch implementation of FF-UA-MF, a lightweight uncertainty-aware multimodal fusion framework designed for industrial special-operations monitoring on edge devices. The model dynamically re-weights visual and inertial modalities based on real-time feature fluctuation analysis, without requiring explicit noise priors or Bayesian posterior sampling.
+This repository contains the PyTorch implementation of FF-AF-AR, a lightweight uncertainty-aware multimodal fusion framework designed for industrial special-operations monitoring on edge devices. The model dynamically re-weights visual and inertial modalities based on real-time feature fluctuation analysis, without requiring explicit noise priors or Bayesian posterior sampling.
 
 
 ## Architecture
